@@ -10,17 +10,12 @@
 <p><c:out value="${sessionScope.sessionState.name}" /></p>
 <p><c:out value="${sessionScope.sessionState.startSession}" /></p>
 <p><c:out value="${sessionScope.sessionState.ipAddress}" /></p>
-<p><c:out value="${sessionScope.sessionState.currentGameNode.hasNoNode()}" /></p>
 <p><c:out value="${sessionScope.sessionState.gamesCount}" /></p>
-<p><c:out value="${sessionScope.sessionState.currentGameNode.text}" /></p>
+<p><c:out value="${sessionScope.sessionState.currentGameNode.question}" /></p>
 
-<c:if test="${sessionState.currentGameNode.hasYesNode()}">
-    <button id="yes" onclick="location='game?answer=yes'">Да</button>
-</c:if>
-
-<c:if test="${sessionState.currentGameNode.hasNoNode()}">
-    <button id="no" onclick="location='game?answer=no'">Нет</button>
-</c:if>
+<c:forEach var="answer" items="${sessionState.currentGameNode.answerToNodeMap.keySet()}">
+    <p><button onclick="location='game?answerId=${answer.id}'"><c:out value="${answer.text}"/></button></p>
+</c:forEach>
 
 <c:if test="${sessionState.currentGameNode.win}">
     <img id="win-img" src="static/img/firework.gif">

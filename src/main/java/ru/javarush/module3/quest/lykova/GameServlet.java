@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(value = "/game")
 public class GameServlet extends HttpServlet {
@@ -26,13 +27,14 @@ public class GameServlet extends HttpServlet {
     }
 
     private void processAnswer(HttpServletRequest req, SessionState sessionState) {
-        String answer = req.getParameter("answer");
-        if (answer != null) {
-            if (answer.equals("yes")) {
-                sessionState.setCurrentGameNode(sessionState.getCurrentGameNode().getYesNode());
-            } else if (answer.equals("no")){
-                sessionState.setCurrentGameNode(sessionState.getCurrentGameNode().getNoNode());
+        String answerId = req.getParameter("answerId");
+        if (answerId != null) {
+            for (Map.Entry<Answer, Node> entry : sessionState.getCurrentGameNode().getAnswerToNodeMap().entrySet()) {
+                if (String.valueOf(entry.getKey().getId()).equals(answerId)) {
+                    sessionState.setCurrentGameNode(entry.getValue());
+                }
             }
+            // TODO: 10.11.2022 throw exception if node is not found
         }
     }
 
