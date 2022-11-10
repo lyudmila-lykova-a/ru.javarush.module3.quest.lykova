@@ -13,6 +13,7 @@ import java.util.Map;
 public class GameServlet extends HttpServlet {
 
     private static final String SESSION_STATE_ATTRIBUTE_NAME = "sessionState";
+    private static final String BLANK_USERNAME_ATTRIBUTE_NAME = "blankUsername";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,6 +21,11 @@ public class GameServlet extends HttpServlet {
         String name = req.getParameter("name");
         if (name != null) {
            sessionState.setName(name);
+        }
+        if (sessionState.getName() == null || sessionState.getName().isBlank()) {
+            req.setAttribute(BLANK_USERNAME_ATTRIBUTE_NAME, true);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            return;
         }
         startNewGame(req, sessionState);
         processAnswer(req, sessionState);
