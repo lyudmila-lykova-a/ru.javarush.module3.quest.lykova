@@ -18,7 +18,7 @@ public class GameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SessionState sessionState = takeSessionState(req);
-        String name = req.getParameter("name");
+        String name = req.getParameter(RequestParamType.USERNAME.getParamName());
         if (name != null) {
            sessionState.setName(name);
         }
@@ -33,7 +33,7 @@ public class GameServlet extends HttpServlet {
     }
 
     private void processAnswer(HttpServletRequest req, SessionState sessionState) {
-        String answerId = req.getParameter("answerId");
+        String answerId = req.getParameter(RequestParamType.ANSWER_ID.getParamName());
         if (answerId != null) {
             for (Map.Entry<Answer, Node> entry : sessionState.getCurrentGameNode().getAnswerToNodeMap().entrySet()) {
                 if (String.valueOf(entry.getKey().getId()).equals(answerId)) {
@@ -45,7 +45,7 @@ public class GameServlet extends HttpServlet {
     }
 
     private void startNewGame(HttpServletRequest req, SessionState sessionState) {
-        if (req.getParameter("newGame") != null || sessionState.getCurrentGameNode() == null) {
+        if (req.getParameter(RequestParamType.NEW_GAME.getParamName()) != null || sessionState.getCurrentGameNode() == null) {
             sessionState.setCurrentGameNode(Quest.init());
             sessionState.setGamesCount(sessionState.getGamesCount() + 1);
         }
