@@ -3,7 +3,7 @@
 <%@ page import="ru.javarush.module3.quest.lykova.RequestParamType" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Главная</title>
 </head>
 <body>
 <b>Пролог</b>
