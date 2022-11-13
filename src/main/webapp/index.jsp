@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="ru.javarush.module3.quest.lykova.RequestParamType" %>
+<%@ page import="ru.javarush.module3.quest.lykova.model.RequestParamType" %>
 <html>
 <head>
     <title>Главная</title>

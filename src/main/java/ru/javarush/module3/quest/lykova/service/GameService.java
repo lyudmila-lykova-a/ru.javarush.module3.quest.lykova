@@ -1,35 +1,34 @@
-package ru.javarush.module3.quest.lykova;
+package ru.javarush.module3.quest.lykova.service;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import ru.javarush.module3.quest.lykova.model.Answer;
+import ru.javarush.module3.quest.lykova.model.Node;
+import ru.javarush.module3.quest.lykova.model.RequestParamType;
+import ru.javarush.module3.quest.lykova.model.SessionState;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Map;
+import java.util.function.Consumer;
 
-@WebServlet(value = "/game")
-public class GameServlet extends HttpServlet {
+public class GameService {
 
-    private static final String SESSION_STATE_ATTRIBUTE_NAME = "sessionState";
+    public static final String SESSION_STATE_ATTRIBUTE_NAME = "sessionState";
     private static final String BLANK_USERNAME_ATTRIBUTE_NAME = "blankUsername";
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SessionState sessionState = takeSessionState(req);
+    public void process(HttpSession session, HttpServletRequest req, Consumer<String> forwardConsumer) {
+        SessionState sessionState = takeSessionState(session, req);
         String name = req.getParameter(RequestParamType.USERNAME.getParamName());
         if (name != null) {
-           sessionState.setName(name);
+            sessionState.setName(name);
         }
         if (sessionState.getName() == null || sessionState.getName().isBlank()) {
             req.setAttribute(BLANK_USERNAME_ATTRIBUTE_NAME, true);
-            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            forwardConsumer.accept("/index.jsp");
             return;
         }
         startNewGame(req, sessionState);
         processAnswer(req, sessionState);
-        getServletContext().getRequestDispatcher("/game.jsp").forward(req, resp);
+        forwardConsumer.accept("/game.jsp");
     }
 
     private void processAnswer(HttpServletRequest req, SessionState sessionState) {
@@ -40,7 +39,6 @@ public class GameServlet extends HttpServlet {
                     sessionState.setCurrentGameNode(entry.getValue());
                 }
             }
-            // TODO: 10.11.2022 throw exception if node is not found
         }
     }
 
@@ -51,8 +49,7 @@ public class GameServlet extends HttpServlet {
         }
     }
 
-    private SessionState takeSessionState(HttpServletRequest req) {
-        HttpSession session = req.getSession(true);
+    private SessionState takeSessionState(HttpSession session, HttpServletRequest req) {
         Object sessionState = session.getAttribute(SESSION_STATE_ATTRIBUTE_NAME);
         if (sessionState == null) {
             sessionState = new SessionState();

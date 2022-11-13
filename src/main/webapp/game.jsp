@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="ru.javarush.module3.quest.lykova.RequestParamType" %>
-<jsp:useBean id="sessionState" scope="session" type="ru.javarush.module3.quest.lykova.SessionState"/>
+<%@ page import="ru.javarush.module3.quest.lykova.model.RequestParamType" %>
+<jsp:useBean id="sessionState" scope="session" type="ru.javarush.module3.quest.lykova.model.SessionState"/>
 <html>
 <head>
     <title>Игра</title>

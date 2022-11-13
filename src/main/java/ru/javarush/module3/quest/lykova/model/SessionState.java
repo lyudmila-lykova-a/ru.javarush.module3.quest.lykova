@@ -1,4 +1,4 @@
-package ru.javarush.module3.quest.lykova;
+package ru.javarush.module3.quest.lykova.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,8 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 public class SessionState {
-    private final LocalDateTime startSession = LocalDateTime.now() ;
+
+    private final LocalDateTime startSession = LocalDateTime.now();
     private String name;
     private String ipAddress;
     private Node currentGameNode;
@@ -18,4 +19,5 @@ public class SessionState {
     public String getStartSessionFormatted() {
         return startSession.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
     }
+
 }

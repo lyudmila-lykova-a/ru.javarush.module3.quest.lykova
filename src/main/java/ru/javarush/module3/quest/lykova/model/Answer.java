@@ -1,4 +1,4 @@
-package ru.javarush.module3.quest.lykova;
+package ru.javarush.module3.quest.lykova.model;
 
 import lombok.Data;
 

@@ -1,7 +1,9 @@
-package ru.javarush.module3.quest.lykova;
+package ru.javarush.module3.quest.lykova.service;
+
+import ru.javarush.module3.quest.lykova.model.Answer;
+import ru.javarush.module3.quest.lykova.model.Node;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
