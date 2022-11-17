@@ -7,7 +7,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Quest {
+public final class Quest {
+
+    private Quest() {
+        // hide
+    }
 
     public static Node init() {
         Map<Answer, Node> answerToNodeMap1 = new LinkedHashMap<>();
